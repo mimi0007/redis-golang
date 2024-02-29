@@ -21,4 +21,16 @@ func main() {
 	ctx := context.Background()
 
 	fmt.Println(redisClient.Ping(ctx)) //this will print ping: PONG if the redis client is connected successfully
+
+	err := redisClient.Set(ctx, "key", "VALUE", 0).Err()
+	if err != nil {
+		panic(err)
+	}
+
+	val, err := redisClient.Get(ctx, "key").Result()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(val)
 }
